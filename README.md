@@ -21,7 +21,11 @@ docker-compose run airflow-worker airflow connections add 'dwh_db' \
   --conn-uri postgresql+psycopg2://airflow:airflow@postgres-dwh/dwh
 ```
 
-3. Run DAG ``btc_usd_demo_etl`` from UI
+3. Run DAG ``btc_usd_demo_etl`` from UI (default login/pass: ``airflow/airflow``) 
+or via CLI:
+```
+docker-compose run airflow-worker airflow dags backfill btc_usd_demo_etl --start-date $(date "+%Y-%m-%d")
+```
 4. Check DAG results in postgres:
 ```
  docker-compose exec postgres-dwh psql -U airflow dwh -c "select * from rates"
